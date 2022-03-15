@@ -14,4 +14,5 @@ class ApplicationController < ActionController::Base
                 redirect_to new_profile_path, notice: "Now, create your own profile."
             end 
         end
+
 end
