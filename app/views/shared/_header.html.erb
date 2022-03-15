@@ -1,0 +1,13 @@
+<nav>
+    <div>
+        <%= link_to "Project Managment.", root_path %>
+    </div>
+    <div>
+        <% if !current_user %>
+            <%= link_to "Sign in", new_user_session_path %>
+            <%= link_to "Create account", new_user_registration_path %>
+        <% else %>
+            <%= link_to "Sign out", destroy_user_session_path, "data-turbo-method": :delete, class:"item" %> 
+        <% end %>
+    </div>
+</nav>
