@@ -4,25 +4,33 @@
     <p>
         User: <b><%= current_user.profile.username %></b><br>
         Project role: <b><%= current_user.profile.project_role %></b><br>
-        User plan: <b><%= current_user.profile.plan %></b><br>
-        <%= link_to "Create a project", new_project_path, class:"btn btn-success" if current_user.profile.project_role == 'Project leader' && current_user.projects.count < 3 %>
+        User plan: <b><%= current_user.profile.plan %></b><br><br>
+        <% if current_user.profile.project_role == 'Project leader' && current_user.profile.plan == "Free" && current_user.projects.count < 3 %>
+            <%= link_to "Create a project", new_project_path, class:"btn btn-success" %>
+        <% elsif current_user.profile.project_role == 'Project leader' && current_user.profile.plan == "Premium" && current_user.projects.count < 10 %>
+            <%= link_to "Create a project", new_project_path, class:"btn btn-success" %>
+        <% else  %>
+            <span class="badge badge-danger">You've achieve the maximum projects allowed.</span>
+        <% end %>
     </p>
 </div>
 
 <br>
 
+<%= turbo_stream_from "projects" %>
+
 <div class="d-flex flex-row border border-danger">
-    <div class="w-50 d-flex flex-column border border-primary p-2">
+    <div class="w-50 d-flex flex-column border border-primary p-5">
         <% if current_user.profile.project_role == 'Project leader' %>
-            <h3>
+            <h3 class="text-center">
                 Your own projects.
             </h3>
             <% if current_user.projects.nil? %>
-                <p>
+                <p class="text-center">
                     You don't have any projects yet.
                 </p>
             <% else %>
-                <p>
+                <p class="text-center">
                     These are your projects
                 </p>
                 <% current_user.projects.each do |project| %>
@@ -34,18 +42,18 @@
 
 
         <% else %>
-            <h3>
+            <h3 class="text-center">
                 You're not a project leader.
             </h3>
-            <p>
+            <p class="text-center">
                 In order to create a new project you must be
                 sign up as a project leader.
             </p>
         <% end %>
     </div>
-    <div class="w-50 border border-primary p-2">
-        <h3>Projects working with others team members.</h3>
-        <p>
+    <div class="w-50 border border-primary p-5">
+        <h3 class="text-center">Projects working with others team members.</h3>
+        <p class="text-center">
             You are not working in other projects.
         </p>
     </div>

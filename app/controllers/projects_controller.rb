@@ -63,8 +63,12 @@ class ProjectsController < ApplicationController
     end
 
     def projects_allowed
-      if current_user.profile.plan == "Free" && current_user.projects.count == 3
+      if current_user.profile.project_role == 'Project leader' && current_user.profile.plan == "Free" && current_user.projects.count == 3
         redirect_to root_path, notice: "You've achieved the maximum projects in your account."
+      elsif current_user.profile.project_role == 'Project leader' && current_user.profile.plan == "Premium" && current_user.projects.count == 10
+        redirect_to root_path, notice: "You've achieved the maximum projects in your account."
+      else
+        redirect_to root_path, notice: "You are a team member."
       end
     end
 

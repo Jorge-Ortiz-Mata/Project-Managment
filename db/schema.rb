@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_16_070309) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_16_190800) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_16_070309) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "connections", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "worker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_connections_on_project_id"
+    t.index ["worker_id"], name: "index_connections_on_worker_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -83,6 +92,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_16_070309) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "connections", "projects"
+  add_foreign_key "connections", "users", column: "worker_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "projects", "users"
 end
