@@ -1,2 +1,15 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
+<h2>Projects</h2>
+<% @projects.each do |project| %>
+    <br>
+    <%= project.id %>. <%= project.description %>
+    <br>
+<% end %>
+
+<h2>Articles</h2>
+<% @articles.each do |article| %>
+    <br>
+    <%= article.id %>. <%= article.body %> 
+    <br>
+<% end %>
