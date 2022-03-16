@@ -67,8 +67,8 @@ class ProjectsController < ApplicationController
         redirect_to root_path, notice: "You've achieved the maximum projects in your account."
       elsif current_user.profile.project_role == 'Project leader' && current_user.profile.plan == "Premium" && current_user.projects.count == 10
         redirect_to root_path, notice: "You've achieved the maximum projects in your account."
-      else
-        redirect_to root_path, notice: "You are a team member."
+      elsif current_user.profile.project_role == 'Team member'
+        redirect_to root_path, alert: "You are a team member."
       end
     end
 
