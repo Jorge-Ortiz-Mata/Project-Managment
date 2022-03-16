@@ -9,4 +9,13 @@
     <%= project.description %>
   </p>
 
+  <p>
+    <strong>Created at:</strong>
+    <b>Created by</b>: <%= project.user.email %> <br>
+  </p>
+
+  <p>
+    <%= link_to "See more", project, class:"btn btn-primary" if request.path == root_path %>
+  </p>
+
 </div>

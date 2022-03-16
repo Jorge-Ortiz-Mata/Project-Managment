@@ -2,7 +2,6 @@
   <% if profile.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-
       <ul>
         <% profile.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -14,27 +13,27 @@
   <div>
     <%= form.label :username, style: "display: block" %>
     <%= form.text_field :username %>
-  </div>
+  </div><br>
 
   <div>
     <%= form.label :birth, style: "display: block" %>
     <%= form.date_field :birth %>
-  </div>
+  </div><br>
 
   <div>
     <%= form.label :position, style: "display: block" %>
     <%= form.text_field :position %>
-  </div>
+  </div><br>
 
-  <div>
+  <div class="form-group">
     <%= form.label :project_role, style: "display: block" %>
-    <%= form.text_field :project_role %>
-  </div>
+    <%= form.select :project_role, ["Project leader", "Team member"], class:"form-control" %>
+  </div><br>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
+    <%= form.label :plan, style: "display: block" %>
+    <%= form.select :plan, ["Free", "Premium"], class:"form-control" %>
+  </div><br>
 
   <div>
     <%= form.submit %>

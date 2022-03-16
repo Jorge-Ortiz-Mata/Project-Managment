@@ -5,6 +5,5 @@ class PagesController < ApplicationController
 
   def home
     @projects = Project.all
-    @articles = Article.all
   end
 end

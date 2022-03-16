@@ -2,31 +2,28 @@
     <%= link_to "Project Managment.", root_path, class:"navbar-brand" %>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <% if current_user %>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <%= current_user.email %>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <%= link_to "Profile", "#", class:"dropdown-item" %>
-                        <%= link_to "Account", "#", class:"dropdown-item" %>
-                        <div class="dropdown-divider"></div>
-                        <%= link_to "Something else", "#", class:"dropdown-item" %>
-                    </div>
-                </li>
-            <% end %>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
         <div class="ml-2 mr-2">
-            <% if !current_user %>
-                <%= link_to "Sign in", new_user_session_path, class:"btn btn-info" %>
-                <%= link_to "Create account", new_user_registration_path, class:"btn btn-success" %>
-            <% else %>
-                <%= link_to "Sign out", destroy_user_session_path, "data-turbo-method": :delete, class:"item", class:"btn btn-danger" %> 
-            <% end %>
+            <ul class="navbar-nav mr-auto">
+                <% if !current_user %>
+                    <li class="ml-1 mr-1">
+                        <%= link_to "Sign in", new_user_session_path, class:"btn btn-info" %>
+                    </li>
+                    <li class="ml-1 mr-1">
+                        <%= link_to "Create account", new_user_registration_path, class:"btn btn-success" %>
+                    </li>
+                <% else %>
+                    <li class="ml-1 mr-1">
+                        <%= link_to "Users", profiles_path, class:"btn btn-secondary" if !current_user.profile.nil? %>
+                    </li>
+                    <li class="ml-1 mr-1">        
+                        <%= link_to "Profile", profile_path(current_user.profile), class:"btn btn-info" if !current_user.profile.nil? %>
+                    </li>
+                    <li class="ml-1 mr-1">
+                        <%= link_to "Sign out", destroy_user_session_path, "data-turbo-method": :delete, class:"item", class:"btn btn-danger" %> 
+                    </li>
+                <% end %>
+            </ul>
         </div>
     </div>
 </nav>

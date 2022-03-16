@@ -1,15 +1,54 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-<h2>Projects</h2>
-<% @projects.each do |project| %>
-    <br>
-    <%= project.id %>. <%= project.description %>
-    <br>
-<% end %>
+<br>
+<h1>Project Managment App.</h1>
+<div>
+    <p>
+        User: <b><%= current_user.profile.username %></b><br>
+        Project role: <b><%= current_user.profile.project_role %></b><br>
+        User plan: <b><%= current_user.profile.plan %></b><br>
+        <%= link_to "Create a project", new_project_path, class:"btn btn-success" if current_user.profile.project_role == 'Project leader' && current_user.projects.count < 3 %>
+    </p>
+</div>
 
-<h2>Articles</h2>
-<% @articles.each do |article| %>
-    <br>
-    <%= article.id %>. <%= article.body %> 
-    <br>
-<% end %>
+<br>
+
+<div class="d-flex flex-row border border-danger">
+    <div class="w-50 d-flex flex-column border border-primary p-2">
+        <% if current_user.profile.project_role == 'Project leader' %>
+            <h3>
+                Your own projects.
+            </h3>
+            <% if current_user.projects.nil? %>
+                <p>
+                    You don't have any projects yet.
+                </p>
+            <% else %>
+                <p>
+                    These are your projects
+                </p>
+                <% current_user.projects.each do |project| %>
+                    <p>
+                        <%= render "projects/project", project: project %>
+                    </p>
+                <% end %>
+            <% end %>
+
+
+        <% else %>
+            <h3>
+                You're not a project leader.
+            </h3>
+            <p>
+                In order to create a new project you must be
+                sign up as a project leader.
+            </p>
+        <% end %>
+    </div>
+    <div class="w-50 border border-primary p-2">
+        <h3>Projects working with others team members.</h3>
+        <p>
+            You are not working in other projects.
+        </p>
+    </div>
+</div>
+
+<br>

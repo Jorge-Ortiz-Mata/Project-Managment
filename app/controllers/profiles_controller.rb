@@ -1,10 +1,13 @@
 class ProfilesController < ApplicationController
-
-  before_action :set_profile, only: %i[ show edit update destroy ]
-
+  
   before_action :user_has_sign_in?
   before_action :user_has_profile?, except: [:new, :create]
   before_action :profile_is_already_exists, only: [:new, :create]
+  before_action :set_profile, only: %i[ show edit update destroy ]
+
+  def index
+    @profiles = Profile.all
+  end
 
   # GET /profiles/1 or /profiles/1.json
   def show
@@ -58,6 +61,6 @@ class ProfilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def profile_params
-      params.require(:profile).permit(:username, :birth, :position, :project_role)
+      params.require(:profile).permit(:username, :birth, :position, :project_role, :plan)
     end
 end

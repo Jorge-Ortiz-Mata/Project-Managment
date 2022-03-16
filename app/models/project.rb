@@ -1,4 +1,10 @@
 class Project < ApplicationRecord
+    
+    belongs_to :user
+
+
+
+    
     # before_destroy :destroy_action
    
     # def destroy_action

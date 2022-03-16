@@ -1,11 +1,9 @@
 class ProjectsController < ApplicationController
+
+  before_action :user_has_sign_in?
+  before_action :user_has_profile?
+  before_action :projects_allowed, only: [:new, :create]
   before_action :set_project, only: %i[ show edit update destroy ]
-
-  # GET /projects or /projects.json
-  def index
-    @projects = Project.all
-  end
-
   # GET /projects/1 or /projects/1.json
   def show
   end
@@ -22,6 +20,7 @@ class ProjectsController < ApplicationController
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
+    @project.user_id = current_user.id
 
     respond_to do |format|
       if @project.save
@@ -61,6 +60,12 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+    end
+
+    def projects_allowed
+      if current_user.profile.plan == "Free" && current_user.projects.count == 3
+        redirect_to root_path, notice: "You've achieved the maximum projects in your account."
+      end
     end
 
     # Only allow a list of trusted parameters through.
