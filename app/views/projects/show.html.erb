@@ -3,15 +3,19 @@
 </div>
 <%= render @project %>
 <br>
+<% if current_user === @project.user %>
+  <div class="d-flex flex-row">
+    <p>
+      <%= link_to "Edit project", edit_project_path(@project), class:"btn btn-primary mr-2" %>
+    </p>
+    <p>
+      <%= button_to "Delete", @project, method: :delete, form: {data: {turbo_confirm: "Are you sure you want to remove this article from your car?"}}, class:"ui red button", class:"btn btn-danger" %>
+    </p>
+  </div>
+<% end %>
 <div>
-  <p>
-    <%= link_to "Edit project", edit_project_path(@project), class:"btn btn-primary" %> |
     <%= link_to "Back", root_path, class:"btn btn-info" %>
-  </p>
-  <p>
-    <%= button_to "Delete", @project, method: :delete, form: {data: {turbo_confirm: "Are you sure you want to remove this article from your car?"}}, class:"ui red button", class:"btn btn-danger" %>
-  </p>
-</div><br>
+</div>
 
 <% if @project.workers.present? %>
   <div>
@@ -34,7 +38,11 @@
               <td><%= worker.profile.username %></td>
               <td><%= worker.profile.position %></td>
               <td><%= worker.email %></td>
-              <td><%= link_to "Remove", remove_user_path(worker: worker, project: @project.id), method: :delete, class:"btn btn-danger" %></td>
+              <% if current_user === @project.user %>
+                <td><%= link_to "Remove", remove_user_path(worker: worker, project: @project.id), method: :delete, class:"btn btn-danger" %></td>
+              <% else %>
+                <td><span class="badge badge-light">You can't remove this user.</span></td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>
@@ -75,7 +83,11 @@
                 <td><%= user.profile.username %></td>
                 <td><%= user.profile.position %></td>
                 <td><%= user.email %></td>
-                <td><%= link_to "Add", add_user_path(user: user, project: @project.id), method: :post, class:"btn btn-success" %></td>
+                <% if current_user === @project.user %>
+                  <td><%= link_to "Add", add_user_path(user: user, project: @project.id), method: :post, class:"btn btn-success" %></td>
+                <% else %>
+                  <td><span class="badge badge-light">You can't add this user.</span></td>
+                <% end %>
               </tr>
             </tbody>
           <% end %>

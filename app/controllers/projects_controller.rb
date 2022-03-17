@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :user_has_profile?
   before_action :projects_allowed, only: [:new, :create]
   before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :user_admin, only: [:edit, :update, :destroy]
   # GET /projects/1 or /projects/1.json
   def show
     @users =  User.all
@@ -52,7 +53,7 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end
@@ -70,6 +71,12 @@ class ProjectsController < ApplicationController
         redirect_to root_path, notice: "You've achieved the maximum projects in your account."
       elsif current_user.profile.project_role == 'Team member'
         redirect_to root_path, alert: "You are a team member."
+      end
+    end
+
+    def user_admin
+      if current_user != @project.user
+        redirect_to @project, alert: "This project doesn't belong to you."
       end
     end
 

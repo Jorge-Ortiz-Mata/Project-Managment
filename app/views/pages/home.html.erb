@@ -55,9 +55,22 @@
     </div>
     <div class="w-50 border border-primary p-5">
         <h3 class="text-center">Projects working with others team members.</h3>
-        <p class="text-center">
-            You are not working in other projects.
-        </p>
+        <% if !Connection.get_projects(current_user).exists? %>
+            <p class="text-center">
+                You are not working in other projects.
+            </p>
+        <% else %>
+            <p class="text-center">
+                These are the projects.
+            </p>
+            <% Connection.get_projects(current_user).each do |connection| %>
+                <p>
+                    <%= render 'projects/project', project: connection.project %>
+                </p>
+            <% end %>
+        <% end %>
+
+
     </div>
 </div>
 
