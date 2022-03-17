@@ -1,6 +1,11 @@
-<h1>Editing project</h1>
-<%= render "form", project: @project %>
-<br>
-<div>
-  <%= link_to "Back", @project %>
+<div class="p-5">
+  <h1 class="text-center">
+    Editing project
+  </h1>
+  <div>
+    <%= render "form", project: @project %>
+  </div>
+  <div>
+    <%= link_to "Back", @project, class:"btn btn-info" %>
+  </div>
 </div>

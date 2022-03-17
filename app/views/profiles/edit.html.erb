@@ -1,10 +1,13 @@
-<h1>Editing profile</h1>
-
-<%= render "form", profile: @profile %>
-
-<br>
-
-<div>
-  <%= link_to "Show this profile", @profile %> |
-  <%= link_to "Back", root_path %>
+<div class="p-5">
+  <div>
+    <h1 class="text-center">
+      Editing profile
+    </h1>
+  </div>
+  <div>
+    <%= render "form", profile: @profile %>
+  </div>
+  <div>
+    <%= link_to "Back", @profile, class:"btn btn-info" %> 
+  </div>
 </div>

@@ -21,8 +21,8 @@
 
 <%= turbo_stream_from "projects" %>
 
-<div class="d-flex flex-row border border-danger">
-    <div class="w-50 d-flex flex-column border border-primary p-5">
+<div class="d-flex flex-row">
+    <div class="w-50 d-flex flex-column p-5">
         <% if current_user.profile.project_role == 'Project leader' %>
             <h3 class="text-center">
                 Your own projects.
@@ -53,7 +53,7 @@
             </p>
         <% end %>
     </div>
-    <div class="w-50 border border-primary p-5">
+    <div class="w-50 p-5">
         <h3 class="text-center">Projects working with others team members.</h3>
         <% if !Connection.get_projects(current_user).exists? %>
             <p class="text-center">
