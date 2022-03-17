@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  get 'add_user', to: 'connections#create'
+  get 'remove_user', to: 'connections#destroy'
+
   resources :projects
   resources :profiles
   devise_for :users

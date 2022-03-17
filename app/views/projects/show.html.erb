@@ -1,8 +1,86 @@
+<div class="text-center mt-3 mb-3">
+  <h2>Project info.</h2>
+</div>
 <%= render @project %>
+<br>
+<div>
+  <p>
+    <%= link_to "Edit project", edit_project_path(@project), class:"btn btn-primary" %> |
+    <%= link_to "Back", root_path, class:"btn btn-info" %>
+  </p>
+  <p>
+    <%= button_to "Delete", @project, method: :delete, form: {data: {turbo_confirm: "Are you sure you want to remove this article from your car?"}}, class:"ui red button", class:"btn btn-danger" %>
+  </p>
+</div><br>
+
+<% if @project.workers.present? %>
+  <div>
+    <p>
+      <h3>Workers on this project.</h3>
+    </p>
+    <div class="p-3">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">email</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @project.workers.each do |worker| %>
+            <tr>
+              <td><%= worker.profile.username %></td>
+              <td><%= worker.profile.position %></td>
+              <td><%= worker.email %></td>
+              <td><%= link_to "Remove", remove_user_path(worker: worker, project: @project.id), method: :delete, class:"btn btn-danger" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% else %>
+  <div class="text-center">
+    <p>
+      <h3>No members yet.</h3>
+    </p>
+    <p>
+      You should add some workers to this project. <br>
+      Check in the table below to see the available users.
+    </p>
+  </div>
+<% end %>
 
 <div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back", root_path %>
-
-  <%= button_to "Delete", @project, method: :delete %>
+  <p>
+    <h3>Add users.</h3>
+  </p>
+  <div class="p-3">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">email</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <% @users.each do |user| %>
+        <% if @project.user.email != user.email %>
+          <% if !Connection.verify_workers(user, @project) %>
+            <tbody>
+              <tr>
+                <td><%= user.profile.username %></td>
+                <td><%= user.profile.position %></td>
+                <td><%= user.email %></td>
+                <td><%= link_to "Add", add_user_path(user: user, project: @project.id), method: :post, class:"btn btn-success" %></td>
+              </tr>
+            </tbody>
+          <% end %>
+        <% end %>
+      <% end %>
+    </table>
+  </div>    
 </div>

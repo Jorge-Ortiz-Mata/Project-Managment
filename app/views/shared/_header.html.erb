@@ -13,8 +13,8 @@
                         <%= link_to "Create account", new_user_registration_path, class:"btn btn-success" %>
                     </li>
                 <% else %>
-                    <li class="ml-1 mr-1">
-                        <%= link_to "Users", profiles_path, class:"btn btn-secondary" if !current_user.profile.nil? %>
+                    <li class="ml-1 mr-1 mt-auto mb-auto">
+                        <%= "#{current_user.email}" if current_user %>
                     </li>
                     <li class="ml-1 mr-1">        
                         <%= link_to "Profile", profile_path(current_user.profile), class:"btn btn-info" if !current_user.profile.nil? %>

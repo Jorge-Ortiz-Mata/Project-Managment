@@ -22,9 +22,12 @@
       <%= render 'shared/alert' %>
     <% end %>
 
-    <%= yield %>
+    <section class="pt-2 pl-3 pr-3 pb-2">
+      <%= yield %>
+    </section>
 
     <footer>
+      <%= render "shared/footer" %>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
