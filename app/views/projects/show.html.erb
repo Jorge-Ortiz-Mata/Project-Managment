@@ -16,7 +16,29 @@
 <div>
     <%= link_to "Back", root_path, class:"btn btn-info" %>
 </div>
-
+<!---------------------------------------------------------------------------------->
+<!-------------------------  Form section.  ---------------------------------------->
+<br>
+<div>
+  <h4>Project files.</h4>
+  <div>
+    <%= form_with url: add_images_path, method: :post do |form| %>
+      <div>
+        <%= form.label :file %>
+        <%= form.file_field :file %>
+      </div>
+      <div>
+        <%= form.hidden_field :project, value: @project.id %>
+      </div>
+      <div>
+        <%= form.submit %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br>
+<!---------------------------------------------------------------------------------->
+<!-------------------------  Tables section.  ---------------------------------------->
 <% if @project.workers.present? %>
   <div>
     <p>
@@ -61,38 +83,40 @@
   </div>
 <% end %>
 
-<div>
-  <p>
-    <h3>Add users.</h3>
-  </p>
-  <div class="p-3">
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Position</th>
-          <th scope="col">email</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <% @users.each do |user| %>
-        <% if @project.user.email != user.email %>
-          <% if !Connection.verify_workers(user, @project) %>
-            <tbody>
-              <tr>
-                <td><%= user.profile.username %></td>
-                <td><%= user.profile.position %></td>
-                <td><%= user.email %></td>
-                <% if current_user === @project.user %>
-                  <td><%= link_to "Add", add_user_path(user: user, project: @project.id), method: :post, class:"btn btn-success" %></td>
-                <% else %>
-                  <td><span class="badge badge-light">You can't add this user.</span></td>
-                <% end %>
-              </tr>
-            </tbody>
+<% if current_user === @project.user %>
+  <div>
+    <p>
+      <h3>Add users.</h3>
+    </p>
+    <div class="p-3">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">email</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <% @users.each do |user| %>
+          <% if @project.user.email != user.email %>
+            <% if !Connection.verify_workers(user, @project) %>
+              <tbody>
+                <tr>
+                  <td><%= user.profile.username %></td>
+                  <td><%= user.profile.position %></td>
+                  <td><%= user.email %></td>
+                  <% if current_user === @project.user %>
+                    <td><%= link_to "Add", add_user_path(user: user, project: @project.id), method: :post, class:"btn btn-success" %></td>
+                  <% else %>
+                    <td><span class="badge badge-light">You can't add this user.</span></td>
+                  <% end %>
+                </tr>
+              </tbody>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    </table>
-  </div>    
-</div>
+      </table>
+    </div>    
+  </div>
+<% end %>

@@ -58,6 +58,12 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def images
+    @project = Project.find(params[:project])
+    @project.files.push(params[:file])
+    redirect_to project_path(@project), notice: "You've added a file to this project. #{@project}"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

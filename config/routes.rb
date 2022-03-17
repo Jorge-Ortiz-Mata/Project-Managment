@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'remove_user', to: 'connections#destroy'
 
   resources :projects
+  post 'add_images', to: 'projects#images'
   resources :profiles
   devise_for :users
   root 'pages#home'

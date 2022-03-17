@@ -1,9 +1,23 @@
 <div id="<%= dom_id profile %>">
-  <p>
-    <strong>Username:</strong> <%= profile.username %><br>
-    <strong>Birth:</strong> <%= profile.birth %><br>
-    <strong>Position:</strong> <%= profile.position %><br>
-    <strong>Project role:</strong> <%= profile.project_role %><br>
-    <strong>Plan:</strong> <%= profile.plan %>
-  </p>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h2 class="display-4">
+        <strong><%= profile.username %></strong>
+      </h2>
+      <p class="lead">
+        <%= profile.position %>
+      </p>      
+      <p>
+        <strong>Birth:</strong> <%= profile.birth %><br>
+        <strong>Project role:</strong> <%= profile.project_role %><br>
+        <strong>Plan:</strong> <%= profile.plan %><br>
+        <strong>Email:</strong> <%= profile.user.email %>
+      </p>
+      <% if current_user == profile.user %>
+      <p>
+        <%= link_to "Edit profile", edit_profile_path(profile), class:"btn btn-info" %> | <%= link_to "Edit account", edit_user_registration_path, class:"btn btn-secondary" %>
+      </p>
+      <% end %>
+    </div>
+  </div>
 </div>
