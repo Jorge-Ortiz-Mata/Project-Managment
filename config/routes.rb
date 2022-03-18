@@ -1,15 +1,22 @@
 Rails.application.routes.draw do
 
+  # Documments controller.
+  post 'add_file', to: 'documents#create'
+
+  # Connections controller.
   get 'add_user', to: 'connections#create'
   get 'remove_user', to: 'connections#destroy'
 
+  # Projects controller.
   resources :projects
-  post 'add_images', to: 'projects#images'
-  resources :profiles
-  devise_for :users
-  root 'pages#home'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # Profiles controller.
+  resources :profiles
+
+  # Users controller.
+  devise_for :users
+
+  # Root path.
+  root 'pages#home'
+
 end

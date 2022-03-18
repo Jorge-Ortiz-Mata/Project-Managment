@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1 or /projects/1.json
   def show
     @users =  User.all
+    @document = Document.new
   end
 
   # GET /projects/new
@@ -27,10 +28,8 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
-        format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -40,10 +39,8 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,14 +51,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to root_path }
-      format.json { head :no_content }
     end
-  end
-
-  def images
-    @project = Project.find(params[:project])
-    @project.files.push(params[:file])
-    redirect_to project_path(@project), notice: "You've added a file to this project. #{@project}"
   end
 
   private

@@ -1,0 +1,26 @@
+<div class="mt-5 mb-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Document</th>
+                <th scope="col">Date</th>
+                <th scope="col">User</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% documents.each do |document| %>
+                <tr>
+                    <th scope="row"><%= document.id %></th>
+                    <td>
+                        <%= link_to rails_blob_path(document.avatar, disposition: "attachment") do %>
+                            <%= document.avatar.record %>
+                        <% end %>
+                    </td>
+                    <td><%= time_ago_in_words(document.created_at) %></td>
+                    <td><%= document.user.profile.username %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

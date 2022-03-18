@@ -15,28 +15,20 @@
 <% end %>
 <div>
     <%= link_to "Back", root_path, class:"btn btn-info" %>
-</div>
+</div><br>
+
+
+<!-------------------------  Files section.  ---------------------------------------->
+<%= render "documents/document", documents: @project.documents %>
 <!---------------------------------------------------------------------------------->
 <!-------------------------  Form section.  ---------------------------------------->
-<br>
-<div>
-  <h4>Project files.</h4>
-  <div>
-    <%= form_with url: add_images_path, method: :post do |form| %>
-      <div>
-        <%= form.label :file %>
-        <%= form.file_field :file %>
-      </div>
-      <div>
-        <%= form.hidden_field :project, value: @project.id %>
-      </div>
-      <div>
-        <%= form.submit %>
-      </div>
-    <% end %>
-  </div>
-</div>
-<br>
+<% @project.workers.each do |worker| %>
+  <% if worker == current_user %>
+    <p>
+      <%= render "documents/form", project: @project %>
+    </p>
+  <% end %>
+<% end %>
 <!---------------------------------------------------------------------------------->
 <!-------------------------  Tables section.  ---------------------------------------->
 <% if @project.workers.present? %>

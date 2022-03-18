@@ -1,5 +1,8 @@
 class ConnectionsController < ApplicationController
 
+    before_action :user_has_sign_in?
+    before_action :user_has_profile?
+
     def create
         @worker = params[:user]
         @project = params[:project]

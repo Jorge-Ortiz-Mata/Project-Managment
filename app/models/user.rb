@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
   has_one :profile, dependent: :destroy
   has_many :projects, dependent: :destroy
-
+  has_many :documents, dependent: :destroy
   before_destroy :destroy_connections
    
     def destroy_connections
