@@ -18,7 +18,7 @@ local:
 google:
   service: GCS
   project: Project-Managment-App
-  credentials: "config/pro-man.json"
+  credentials: "config/pro-man-2.json"
   bucket: project-managment-app
 
 # Use bin/rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
